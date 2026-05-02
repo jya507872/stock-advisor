@@ -10,4 +10,4 @@
 // Then redeploy the Netlify site (or use a Netlify env variable instead).
 // ─────────────────────────────────────────────────────────────────────────
 
-window.API_BASE = "";   // ← replace with your Render URL when deploying to Netlify
+window.API_BASE = "https://stock-advisor-q6l4.onrender.com";
