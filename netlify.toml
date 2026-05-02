@@ -1,0 +1,14 @@
+# Netlify configuration
+# The Python FastAPI backend must be deployed separately (e.g. Render.com).
+# Set VITE_API_URL in Netlify environment variables to point to your deployed backend.
+# Leave blank to use relative /api paths (works when running locally).
+
+[build]
+  publish = "static"
+  command = "echo 'Static frontend — no build step required'"
+
+[[redirects]]
+  from   = "/api/*"
+  to     = ":splat"
+  status = 200
+  force  = false
