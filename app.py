@@ -8,6 +8,7 @@ import pandas as pd
 import uvicorn
 import yfinance as yf
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 sys.path.insert(0, os.path.dirname(__file__))
@@ -15,6 +16,14 @@ import analyzer, data_fetcher, patterns as pat
 from profit_guide import generate_profit_guide
 
 app = FastAPI(title="Stock Advisor API", docs_url="/api/docs")
+
+# Allow Netlify frontend (and local dev) to call the API cross-origin
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://stock-advisor-dashboard.netlify.app", "http://localhost:8000", "http://localhost:3000"],
+    allow_methods=["GET"],
+    allow_headers=["*"],
+)
 
 
 # ── helpers ──────────────────────────────────────────────────────────────────

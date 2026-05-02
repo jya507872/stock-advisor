@@ -4,6 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Stock Advisor — Live Dashboard</title>
 <script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+<script src="config.js"></script>
 <style>
 /* ── TOKENS ─────────────────────────────────────────────────── */
 :root{
@@ -949,8 +950,13 @@ function renderPatterns(d) {
 }
 
 // ═══════════════════════════ UTILS ══════════════════════════════
+// API_BASE: set via window.API_BASE (injected by config.js) or falls back to relative path.
+// When hosted on Netlify (no Python backend), set window.API_BASE to your Render URL:
+//   e.g.  window.API_BASE = "https://stock-advisor-api.onrender.com";
+const API_BASE = (typeof window.API_BASE !== 'undefined' && window.API_BASE) ? window.API_BASE.replace(/\/$/, '') : '';
+
 async function apiFetch(url) {
-  const r = await fetch(url);
+  const r = await fetch(API_BASE + url);
   if (!r.ok) {
     const err = await r.json().catch(() => ({detail: r.statusText}));
     throw new Error(err.detail || r.statusText);
